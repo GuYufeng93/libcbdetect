@@ -54,8 +54,8 @@ void plot_corners(const cv::Mat &img, const std::vector<cv::Point2d> &corners, c
   for (int i = 0; i < corners.size(); ++i) {
     cv::circle(img_show, corners[i], 2, cv::Scalar(0, 0, 255), -1);
   }
-  cv::imshow(str, img_show);
-  cv::waitKey();
+  //cv::imshow(str, img_show);
+  //cv::waitKey();
 }
 
 void plot_corners(const cv::Mat &img, const Corner &corners) {
@@ -79,8 +79,10 @@ void plot_corners(const cv::Mat &img, const Corner &corners) {
     cv::putText(img_show, std::to_string(i), cv::Point2i(corners.p[i].x - 12, corners.p[i].y - 6),
                 cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255), 1);
   }
-  cv::imshow("corners_img", img_show);
   cv::imwrite("corners_img.png", img_show);
+
+  //cv::imshow("corners_img", img_show);
+  //cv::waitKey();
 }
 
 }
