@@ -34,6 +34,9 @@
 #include "refine_corners.h"
 #include "score_corners.h"
 
+#include <iostream>
+using namespace std;
+
 namespace cbdetect {
 
 void find_corners_reiszed(const cv::Mat &img, Corner &corners, const Params &params) {
@@ -52,11 +55,14 @@ void find_corners_reiszed(const cv::Mat &img, Corner &corners, const Params &par
   cv::resize(img, img_resized, cv::Size(img.cols * scale, img.rows * scale), 0, 0, cv::INTER_LINEAR);
 
   if (img_resized.channels() == 3) {
+/*
 #if CV_VERSION_MAJOR >= 4
     cv::cvtColor(img_resized, img_norm, cv::COLOR_BGR2GRAY);
 #else
-    cv::cvtColor(img, img_show, CV_GRAY2BGR);
+	cv::cvtColor(img, img_norm, CV_GRAY2BGR);
 #endif
+*/
+	cv::cvtColor(img, img_norm, cv::COLOR_BGR2GRAY);//变为灰度图
     img_norm.convertTo(img_norm, CV_64F, 1 / 255.0, 0);
   } else {
     img_resized.convertTo(img_norm, CV_64F, 1 / 255.0, 0);
@@ -127,13 +133,19 @@ void find_corners(const cv::Mat &img, Corner &corners, const Params &params) {
 
   // convert to double grayscale image
   cv::Mat img_norm;
+cout<<"img.channels()"<<img.channels()<<" "<<CV_VERSION_MAJOR<<endl;
   if (img.channels() == 3) {
-#if CV_VERSION_MAJOR >= 4
+
+/*
+//CV_VERSION_MAJOR=3
+#if CV_VERSION_MAJOR >= 4 
     cv::cvtColor(img, img_norm, cv::COLOR_BGRA2GRAY);
 #else
-    cv::cvtColor(img, img_show, CV_GRAY2BGR);
+	cv::cvtColor(img, img_norm, CV_GRAY2BGR); //do
 #endif
-    img_norm.convertTo(img_norm, CV_64F, 1. / 255., 0);
+*/
+	cv::cvtColor(img, img_norm, cv::COLOR_BGR2GRAY);//变为灰度图
+    img_norm.convertTo(img_norm, CV_64F, 1. / 255., 0); //
   } else {
     img.convertTo(img_norm, CV_64F, 1. / 255., 0);
   }
